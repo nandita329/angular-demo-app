@@ -1,0 +1,64 @@
+<form #contatForm = "ngForm" (ngSubmit) = "submit(contatForm)">
+  <div class="form-group">
+    <label for="firstName">First Name</label>
+    <input 
+      required 
+      minlength = "3" 
+      maxlength= "10" 
+      pattern = "nandita"
+      ngModel 
+      name="firstName" 
+      id="firstName" 
+      #firstName = "ngModel" 
+      (change)="log(firstName)" 
+      type="text" 
+      class="form-control">
+    <div 
+      class="alert alert-danger" 
+      *ngIf="firstName.touched && !firstName.valid">
+      <div *ngIf= "firstName.errors.required">
+        Field is Required
+      </div>
+      <div *ngIf= "firstName.errors.minlength">
+        Name should be minlength of {{firstName.errors.minlength.requiredLength}}
+      </div>
+      <div *ngIf= "firstName.errors.pattern">
+        Name not matching with pattern
+      </div>
+    </div>
+  </div>
+  <div 
+    class="form-group">
+    <label for="comment">
+       Comment
+    </label>
+    <textarea 
+      ngModel 
+      name="comment" 
+      id="comment" 
+      cols="30" 
+      rows="10" 
+      class="form-control">
+    </textarea>
+  </div>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" ngModel name = "isSelected">
+      Select
+    </label>
+  </div>
+  <div class="form-group">
+      <label for="courseMethod">
+      </label>
+      <select multiple ngModel name="courseMethod" id="courseMethod" class="form-control">
+        <option *ngFor = "let course of courses; index as i "[value]="i">{{course}}</option>
+      </select>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="courseSelect">
+      </label>
+    </div>
+  <p>{{contatForm.value | json}}</p>
+  <button class="btn btn-primary" [disabled] = "!contatForm.valid">Submit</button>
+</form>

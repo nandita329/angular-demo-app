@@ -1,0 +1,55 @@
+<form [formGroup] = "form" (ngSubmit) = "submit(form)">
+  <div class="alert alert-danger" *ngIf = "form.errors">
+    The usename or password is invalid
+  </div>
+  <div formGroupName = "account">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input 
+            formControlName = "username"
+            #username
+            id="username" 
+            type="text" 
+            class="form-control">
+        <div *ngIf = "username.pending">Checking uniquesness</div>
+        <!-- <div 
+        class="alert alert-danger" 
+        *ngIf="username.touched && username.invalid">
+        <div *ngIf= "username.errors.required">
+          Field is Required
+        </div>
+        <div *ngIf= "username.errors.minlength">
+          min length {{username.errors.minlength.requiredLength}}
+        </div>
+        <div *ngIf= "username.errors.cannotContainSpace">
+          space not allowd
+        </div>
+        <p *ngIf="username.errors?.checkPassword">Old password is not valid.</p>
+    </div> -->
+    <div>{{username.errors | json}}</div>
+    <p *ngIf="username.errors?.checkPassword">Old password is not valid.</p>
+  </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input 
+            formControlName = "password"
+            id="password" 
+            type="text" 
+            class="form-control">
+    </div>
+  </div>
+  <label for="skill">Add Skill</label>
+  <input type="text" class="form-control" (keyup.enter) = "addSkills(skill)" #skill>
+  <ul class="list-group">
+    <li class="list-group-item" (click) = "removeSkill(skill)" *ngFor = "let skill of skills.controls">{{skill.value}}</li>
+  </ul>
+  
+  <div 
+  class="alert alert-danger" 
+  *ngIf="password.touched && password.invalid">
+  <div *ngIf= "password.errors.required">
+    Field is Required
+  </div>
+</div>
+  <button class="btn btn-primary">Sign Up</button>
+</form>
